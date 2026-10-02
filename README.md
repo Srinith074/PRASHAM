@@ -1,124 +1,673 @@
-# PRASHAM [प्रशम] — CPSE Material Code Standardization & Harmonization Platform
-> **AI-Driven Standardization and Harmonization of Material Codes Across CPSEs**  
-> *Smart India Hackathon (SIH) Enterprise Solution for Central Public Sector Enterprises*
+PRASHAM [प्रशम]
+AI-Driven Standardization & Harmonization of Material Codes Across CPSEs
 
----
+One material. Multiple codes. One harmonized identity.
 
-## 🌟 Executive Overview
-Different Indian Central Public Sector Enterprises (e.g., **BHEL, NTPC, IOCL, ONGC, SAIL, GAIL, COAL INDIA**) maintain distinct, siloed material code standards, naming formats, cataloging taxonomy, and ERP schemas for the exact same physical industrial items.
+PRASHAM is an AI-powered platform designed to standardize, identify, and harmonize material codes and descriptions across Central Public Sector Enterprises (CPSEs).
 
-**PRASHAM** utilizes an AI/ML normalization engine, semantic vector embeddings, and an enterprise crosswalk resolver to ingest legacy material codes, identify cross-enterprise duplicates, generate standardized descriptions, and establish a **Single National Harmonized Identity** across all CPSE material catalogs.
+The platform addresses the challenge of fragmented material master data, where the same or equivalent industrial materials may exist under different codes, descriptions, units, specifications, and classification systems across organizations.
 
----
+🚀 Overview
 
-## 🚀 Key Modules Built
+Central Public Sector Enterprises such as BHEL, NTPC, ONGC, IOCL, SAIL, and GAIL maintain large material catalogs across procurement, inventory, maintenance, and ERP systems.
 
-1. **Material Harmonization Dashboard** (`/dashboard`)
-   - 6 KPI tracking cards: Total Material Records (1.28M+), Unique Materials, Potential Duplicates, AI Matches Generated, Harmonization Rate (68.4%), Pending Human Review.
-   - Interactive CPSE selector with real-time dynamic re-aggregation.
-   - Multi-CPSE status breakdown and confidence distribution charts.
+The same physical material can be represented differently across enterprises.
 
-2. **Material Master Catalog** (`/master`)
-   - Complete unified view across participating CPSEs (BHEL, NTPC, ONGC, IOCL, SAIL, GAIL).
-   - Rich column view: Material Code, CPSE, Material Description, Normalized Description, Category, UOM, Specifications, Harmonized Code, Similarity Score, Status.
-   - Drawer slide-over for deep material inspection, ERP legacy metadata, attribute badges, and AI parity indicators.
+For example:
 
-3. **AI Harmonization Engine** (`/harmonize`)
-   - Flagship transformation engine comparing legacy CPSE records side-by-side.
-   - Token-level normalization breakdown (Attribute extraction: Thread, Grade, Dimensions, Metallurgy).
-   - Real-time generation of the unified **Harmonized Material Identity** (`HMF-FAST-00128`).
-   - One-click approval to publish into the National Master Catalog.
+BHEL
+BHEL-FST-10921
+HEX BOLT M10X50 GR 8.8
 
-4. **Duplicate Detection & Entity Resolution** (`/duplicates`)
-   - Cluster-based deduplication groups (Near-identical, Semantic duplicates, Specification variants).
-   - Side-by-side attribute comparison matrix with visual difference highlighting.
-   - Actionable workflows: Merge into Harmonized ID, Mark as Unique, Flag for Review.
+NTPC
+NTPC-BLT-88231
+HEXAGONAL HEAD BOLT 10MM X 50MM CLASS 8.8
 
-5. **Material Code Crosswalk (Cross-CPSE Mapping)** (`/crosswalk`)
-   - **Visual Hierarchical Mapping**: Restrained, elegant tree using structured lines and boxes (Root Harmonized Identity $\rightarrow$ CPSE Branches $\rightarrow$ Legacy Material Codes).
-   - **Detailed Crosswalk Matrix**: Harmonized Code, CPSE, Original Code, Original Description, Standard Description, Confidence, Mapping Status.
-   - **Multi-parameter Filtering**: Filter by CPSE, Category, Mapping Status, and Confidence tier (≥90%, 75-89%, <75%).
-   - **Inspection & AI Reasoning Modal**: Click any crosswalk mapping to inspect source ERP plant, unit contract pricing, metallurgy verification, and AI alignment rationale.
-   - **Export Crosswalk**: Formatted CSV download for integration into external procurement and ERP data pipelines.
+IOCL
+IOCL-FST-19283
+MS HEX HEAD BOLT M10*50 GR 8.8
 
-6. **Review Queue & Governance Station (Human Review & Approval)** (`/review`)
-   - **Human-in-the-Loop Model**: Controlled enterprise governance console complying with Central Vigilance Commission (CVC) and GeM public procurement directives.
-   - **Top Multi-Attribute Filters**: Priority (High/Medium/Low), CPSE, Category, Confidence Tier, Age (Today/24h/7d/Older), and Recommendation Type (Merge/Split/Reclassify/Standardize Description).
-   - **Main Stewardship Queue**: Case ID (`HR-004821`), Material, CPSE, AI Recommendation, Confidence Meter, Technical Reason, Creation Age, and Priority Badges.
-   - **Detailed Review Workspace**:
-     - **Source Records**: Multi-CPSE side-by-side legacy ERP attributes, plant locations, and contract prices.
-     - **AI Analysis**: 5-factor evaluation matrix (Similarity 96.8%, Attribute Match 100%, Semantic Match 97%, Specification Match 95%, UOM Match 100%).
-     - **AI Recommendation & Reasoning**: Full explainability breakdown justifying cross-enterprise parity.
-     - **Controlled Decision Actions**: `Approve`, `Reject` (with justification logging), and `Request More Information` (with target CPSE query routing).
-   - **Approval History Section**: Immutable statutory audit trail logging Reviewer (`Dr. R. K. Verma, Chief Master Data Steward`), timestamps, decisions, and comments.
+These records may represent the same material despite having different codes and descriptions.
 
-7. **Data Import & Pre-Ingestion Validation Pipeline** (`/import`)
-   - **Multi-Format Dropzone**: Native drag-and-drop supporting `CSV`, `XLSX`, and `JSON` material master dumps up to 100 MB.
-   - **ERP Schema Field Specifications**: Explicit display of **Required Fields** (*Material Code, Material Description, UOM, Category*) and **Optional Fields** (*Manufacturer, Part Number, Specification, Material Type, Plant, Procurement Group*).
-   - **5-Stage Automated Validation Pipeline**: File Validation $\rightarrow$ Schema Mapping $\rightarrow$ Data Quality Check $\rightarrow$ Normalization $\rightarrow$ AI Harmonization.
-   - **Pre-Ingestion Audit Metrics**: Real-time evaluation of Records Detected (`24,820`), Valid Records (`24,392`), Missing Descriptions (`182`), Invalid UOM (`91`), and Duplicate Codes (`155`).
-   - **Start AI Processing**: Automated trigger for vector embedding creation, attribute extraction, and crosswalk indexing.
-   - **Recent Imports Table**: Historical audit log of uploaded enterprise batches with valid record ratios and processing status.
+PRASHAM uses AI-assisted normalization, semantic similarity, attribute extraction, duplicate detection, and human-in-the-loop validation to identify such relationships and create a common Harmonized Material Identity.
 
-8. **Harmonization Analytics** (`/analytics`)
-   - **Harmonization Progress**: Monthly trend trajectory tracking catalog ingestion and standardization growth from 26.2% to 68.4%.
-   - **Duplicate Reduction**: Comparative before-and-after analysis showing `126,480` detected duplicates reduced by `98,742` resolved entries (78.1% resolution rate).
-   - **CPSE Comparison Matrix**: Enterprise-level breakdown table across BHEL, NTPC, IOCL, ONGC, SAIL, and GAIL (Material Records, Duplicates, Harmonized, Pending Review, Data Quality Index).
-   - **Category Duplication Analysis**: Ranking of procurement commodities with highest redundancy (Fasteners 28.4%, Valves 24.1%, Piping 21.6%, Bearings 19.8%).
-   - **AI Performance Metrics**: Evaluation of 98,742 total AI matches, 95.7% approval accuracy, 94.8% average confidence, and 14.2% human review escalation.
-   - **Potential Procurement Impact (DEMO Estimates)**: Carefully labeled prototype estimates (*126,480 potential duplicate materials, 18,420 consolidation opportunities, ₹548.6 Cr standardization scope*) with prominent statutory disclaimer banner: *“Illustrative prototype estimates — not actual CPSE savings.”*
-   - **Export Report**: Automated CSV export generating an executive analytics briefing.
+🎯 Problem Statement
 
-9. **Audit Trail & Governance Log** (`/audit`)
-   - **Complete Traceability**: Regulatory-grade event log recording AI recommendations, human stewardship approvals, and material master mutations under CVC/CAG compliance standards.
-   - **10 Enterprise Event Log Columns**:
-     - **Timestamp**: e.g., `02 Oct 2026, 18:42`
-     - **User**: e.g., `Admin User`
-     - **CPSE**: e.g., `BHEL`
-     - **Material**: e.g., `BHEL-FST-10921`
-     - **Action**: e.g., `Harmonization Approved`
-     - **Previous Value**: e.g., `BHEL-FST-10921`
-     - **New Value**: e.g., `HMF-FAST-00128`
-     - **AI Confidence**: e.g., `96.8%`
-     - **Decision**: e.g., `Approved`
-     - **Reference ID**: e.g., `HR-004821`
-   - **Multi-Factor Filtering**: 6 dedicated operational filters (`Date`, `CPSE`, `User`, `Action`, `Material`, `Reference ID`) plus rapid filter reset.
-   - **Interactive Traceability Detail Drawer**: Slide-over panel exposing the complete material lifecycle across 6 statutory dimensions:
-     - **Source Records**: Multi-CPSE legacy ERP attributes (BHEL, NTPC, IOCL), plant locations, ERP instances, UOMs, and contract prices.
-     - **AI Recommendation**: Standardized unified code, canonical nomenclature, standard UOM, and UNSPSC classification.
-     - **Confidence Breakdown**: Dimensional score matrix (Attribute 100%, Semantic 97%, Specification 95%, UOM 100%, Overall 96.8%).
-     - **Technical Explanation**: Comprehensive reasoning justifying equivalence across naming conventions and coding formats.
-     - **Human Decision**: Verifiable record of the human reviewer, official comments, timestamp, and cryptographic hash verification.
-     - **Lifecycle Timeline**: Chronological event sequence from ingestion to token extraction, vector cosine clustering, stewardship review, and final catalog publish.
-   - **Export Audit Log**: Formatted CSV download for statutory auditing and vigilance compliance.
+Different CPSEs may maintain independent material master databases and coding conventions.
 
----
+This can result in:
 
-## 🛠️ Tech Stack & Architecture
+Duplicate material records
+Inconsistent material descriptions
+Multiple codes for equivalent materials
+Different naming conventions
+Inconsistent units of measurement
+Difficult cross-CPSE material discovery
+Manual data-cleaning effort
+Challenges in creating a unified material master
+Reduced visibility into equivalent materials
 
-- **Frontend**: React 19 + Vite 8
-- **Icons**: Lucide React
-- **Linter**: Oxlint (0 warnings, 0 errors)
-- **Design System**: Sovereign India Digital Design System (Ashoka Blue `#0a2540`, Tri-color saffron accent `#ff6b35`, Indian forest emerald `#10b981`, clean enterprise typography).
+PRASHAM provides an intelligent layer for discovering, understanding, standardizing, and harmonizing material information across participating organizations.
 
----
+💡 Solution
 
-## 💻 Running Locally
+PRASHAM combines multiple AI-assisted capabilities:
 
-```bash
-# Install dependencies
+AI-Based Material Normalization
+
+Converts inconsistent material descriptions into standardized representations.
+
+Semantic Matching
+
+Identifies materials that are conceptually similar even when different terminology, abbreviations, or word ordering is used.
+
+Attribute Extraction
+
+Extracts important technical attributes such as:
+
+Dimensions
+Grade
+Material
+Thread
+Pressure rating
+Voltage
+Capacity
+UOM
+Technical specifications
+Duplicate Detection
+
+Identifies potential duplicate or equivalent material records across CPSE catalogs.
+
+Harmonized Material Identity
+
+Maps equivalent material records to a common harmonized identity.
+
+Explainable AI
+
+Provides the reasoning behind each recommendation using:
+
+Similarity score
+Attribute matching
+Specification matching
+UOM compatibility
+Detected differences
+Source records
+Human-in-the-Loop Validation
+
+AI recommendations can be reviewed and approved by authorized users before important material mappings are finalized.
+
+🧠 Core Workflow
+CPSE Material Data
+        ↓
+Data Ingestion
+        ↓
+Validation & Normalization
+        ↓
+Attribute Extraction
+        ↓
+Semantic Similarity Analysis
+        ↓
+Duplicate / Equivalent Material Detection
+        ↓
+AI Harmonization Recommendation
+        ↓
+Human Review & Approval
+        ↓
+Harmonized Material Identity
+        ↓
+Cross-CPSE Mapping
+        ↓
+Audit & Traceability
+🚀 Key Features
+1. Material Harmonization Dashboard
+
+A centralized dashboard providing an overview of material standardization across participating CPSEs.
+
+Features
+Total material records
+Unique materials
+Potential duplicates
+AI-generated matches
+Harmonization progress
+Pending reviews
+CPSE-level summaries
+Material category analysis
+Confidence distribution
+2. Material Master
+
+A unified view of material records across participating CPSEs.
+
+Information Displayed
+Material Code
+CPSE
+Material Description
+Normalized Description
+Category
+UOM
+Technical Specification
+Harmonized Code
+Similarity Score
+Harmonization Status
+
+Users can inspect individual materials and view their original records, normalized attributes, AI analysis, and cross-CPSE mappings.
+
+3. AI Harmonization Engine
+
+The flagship feature of PRASHAM.
+
+The engine compares material records and generates an AI-assisted harmonization recommendation using semantic and attribute-level similarities.
+
+Example
+
+Source Records
+
+BHEL
+HEX BOLT M10X50 GR 8.8
+
+NTPC
+HEXAGONAL HEAD BOLT 10MM X 50MM CLASS 8.8
+
+IOCL
+MS HEX HEAD BOLT M10*50 GR 8.8
+Harmonized Result
+Harmonized Code:
+HMF-FAST-00128
+
+Standard Description:
+Hexagonal Head Bolt, M10 × 50 mm, Grade 8.8
+
+Similarity:
+96.8%
+
+The system also provides an explanation of the attributes and evidence contributing to the recommendation.
+
+4. Duplicate Detection
+
+Identifies potential duplicate and semantically equivalent material records.
+
+Duplicate groups can include:
+
+Near-identical materials
+Semantic duplicates
+Specification-equivalent materials
+Potential variants
+Records requiring manual review
+
+Users can compare source records and inspect the attributes responsible for the similarity recommendation.
+
+5. Material Code Crosswalk
+
+Creates a relationship between CPSE-specific material codes and a common harmonized material identity.
+
+Example:
+
+                 HMF-FAST-00128
+                        │
+          ┌─────────────┼─────────────┐
+          │             │             │
+        BHEL          NTPC          IOCL
+          │             │             │
+ BHEL-FST-10921  NTPC-BLT-88231  IOCL-FST-19283
+
+The crosswalk provides traceability between legacy material codes and their proposed harmonized identity.
+
+Crosswalk Capabilities
+CPSE filtering
+Category filtering
+Mapping status
+Confidence filtering
+Source record inspection
+AI reasoning
+Exportable crosswalk data
+6. Human Review & Approval
+
+PRASHAM follows a Human-in-the-Loop approach.
+
+AI recommendations can be:
+
+Approved
+Rejected
+Sent for further review
+Returned for additional information
+
+The review interface provides:
+
+Source material records
+AI recommendation
+Similarity score
+Attribute comparison
+Technical reasoning
+Reviewer decision
+Reviewer comments
+Timestamp
+
+This ensures that important material-master decisions can remain under human oversight.
+
+7. Data Import & Validation
+
+The platform supports material-master ingestion through:
+
+CSV
+XLSX
+JSON
+Validation Workflow
+File Validation
+      ↓
+Schema Mapping
+      ↓
+Data Quality Check
+      ↓
+Normalization
+      ↓
+AI Harmonization
+Required Fields
+Material Code
+Material Description
+UOM
+Category
+Optional Fields
+Manufacturer
+Part Number
+Specification
+Material Type
+Plant
+Procurement Group
+8. Harmonization Analytics
+
+Provides insights into material standardization and data quality.
+
+Analytics Include
+Harmonization progress
+Duplicate material trends
+CPSE comparison
+Category-level duplication
+AI matching statistics
+Review workload
+Material data quality indicators
+Potential consolidation opportunities
+
+The prototype also demonstrates how harmonization data could be used to identify potential procurement and catalog-standardization opportunities.
+
+Note: All numerical values displayed in the prototype are illustrative demonstration data and do not represent actual CPSE statistics or savings.
+
+9. Audit & Traceability
+
+PRASHAM provides a structured history of material harmonization activities.
+
+Typical audit information includes:
+
+Timestamp
+User
+CPSE
+Material
+Action
+Previous Value
+New Value
+AI Confidence
+Decision
+Reference ID
+
+A material's lifecycle can be traced through:
+
+Data Ingestion
+      ↓
+Normalization
+      ↓
+Attribute Extraction
+      ↓
+AI Matching
+      ↓
+Recommendation
+      ↓
+Human Review
+      ↓
+Approval
+      ↓
+Harmonized Catalog
+
+This provides a foundation for transparent and traceable material-master governance.
+
+🤖 AI Approach
+
+PRASHAM uses multiple complementary techniques for material harmonization.
+
+1. Data Normalization
+
+Standardizes:
+
+Case
+Abbreviations
+Units
+Symbols
+Spacing
+Naming conventions
+
+Example:
+
+10MM X 50
+10 MM × 50 MM
+M10*50
+
+can be converted into a common representation.
+
+2. Attribute Extraction
+
+Important technical information is extracted from material descriptions.
+
+Example:
+
+HEX BOLT M10X50 GR 8.8
+
+becomes:
+
+Type       → Hex Bolt
+Diameter   → M10
+Length     → 50 mm
+Grade      → 8.8
+3. Semantic Similarity
+
+Semantic representations are used to identify materials that have similar meaning even when their descriptions differ significantly.
+
+4. Attribute-Level Matching
+
+The system compares important material attributes including:
+
+Dimensions
+Material
+Grade
+UOM
+Technical specifications
+Category
+5. Explainable Recommendation
+
+Multiple matching signals are combined to generate a recommendation.
+
+Semantic Similarity
+        +
+Attribute Similarity
+        +
+Specification Match
+        +
+UOM Compatibility
+        ↓
+Harmonization Recommendation
+6. Human Validation
+
+The final decision can be reviewed by an authorized user.
+
+AI Recommendation
+        +
+Human Validation
+        =
+Controlled Harmonization
+🏗️ System Architecture
+┌──────────────────────────────────────────┐
+│              CPSE Data Sources           │
+│                                          │
+│ BHEL │ NTPC │ ONGC │ IOCL │ SAIL │ GAIL│
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│          Data Ingestion Layer            │
+│        CSV │ XLSX │ JSON │ ERP           │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│       Normalization & Validation         │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│          AI / ML Processing              │
+│                                          │
+│ Attribute Extraction                     │
+│ Semantic Matching                        │
+│ Duplicate Detection                      │
+│ Material Classification                  │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│       Harmonization & Crosswalk          │
+│                                          │
+│ CPSE Code → Harmonized Identity          │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│       Human Review & Governance          │
+└────────────────────┬─────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────┐
+│       Harmonized Material Master         │
+└──────────────────────────────────────────┘
+🖥️ Prototype Modules
+Module	Route	Purpose
+Dashboard	/dashboard	Overall harmonization overview
+Material Master	/master	Explore material records
+AI Harmonization	/harmonize	Generate and review AI mappings
+Duplicate Detection	/duplicates	Identify potential duplicates
+Crosswalk	/crosswalk	Map CPSE codes to harmonized identities
+Review Queue	/review	Human review and approval
+Data Import	/import	Upload and validate material data
+Analytics	/analytics	Analyze harmonization progress
+Audit Trail	/audit	Trace material and decision history
+🎨 User Experience
+
+PRASHAM follows a premium, minimal enterprise design approach.
+
+Design Principles
+Clean information hierarchy
+Data-first interface
+Minimal color palette
+Professional typography
+Floating navigation
+Responsive mobile navigation
+Responsive tables
+Explainable AI interfaces
+Consistent components
+Accessible controls
+Minimal visual distractions
+
+The prototype is designed for both desktop and mobile experiences.
+
+🛠️ Technology Stack
+Frontend
+React 19
+Vite
+JavaScript / TypeScript
+Lucide React
+AI / Data Processing
+
+The proposed architecture can integrate:
+
+NLP-based normalization
+Semantic embeddings
+Vector similarity search
+Attribute extraction
+Entity resolution
+Classification models
+Development Tools
+Git
+GitHub
+npm
+Oxlint
+📊 Prototype Data
+
+The prototype uses synthetic and illustrative material records to demonstrate the proposed solution.
+
+Example organizations include:
+
+BHEL
+NTPC
+ONGC
+IOCL
+SAIL
+GAIL
+
+The sample organizations, material codes, descriptions, metrics, and records shown in the prototype are intended for demonstration purposes.
+
+They should not be interpreted as actual CPSE material-master records.
+
+Similarly, numerical values displayed in the prototype are illustrative.
+
+For example:
+
+1.28M Material Records
+126,480 Potential Duplicates
+98,742 AI Matches
+68.4% Harmonization Rate
+₹548.6 Cr Standardization Scope
+
+These figures are prototype demonstration values and do not represent actual CPSE datasets, operational performance, or financial savings.
+
+🔐 Responsible AI & Governance
+
+PRASHAM is designed around a human-in-the-loop workflow.
+
+The prototype demonstrates:
+
+Explainable AI recommendations
+Confidence indicators
+Source-record traceability
+Human approval
+Decision history
+Audit events
+Controlled material mapping
+
+A production implementation would additionally require organization-specific requirements for:
+
+Authentication and authorization
+Data security
+ERP integration
+Data privacy
+Audit policies
+Data retention
+Model validation
+Governance
+Regulatory compliance
+🚀 Running Locally
+1. Clone the repository
+git clone https://github.com/<your-username>/<repository-name>.git
+cd <repository-name>
+2. Install dependencies
 npm install
-
-# Start development server
+3. Start the development server
 npm run dev
 
-# Run Oxlint validation
+Open:
+
+http://localhost:5173
+4. Run linting
 npm run lint
-
-# Production build
+5. Create a production build
 npm run build
-```
+🌐 Deployment
 
-*Access the running platform at `http://localhost:5173`.*
-#   P R A S H A M  
- 
+The frontend can be deployed using:
+
+GitHub Pages
+Vercel
+Netlify
+Other static hosting platforms
+
+For the SIH prototype, the application can be published through GitHub Pages for easy access and demonstration.
+
+🔮 Future Scope
+ERP Integration
+
+Integration with enterprise systems such as:
+
+SAP
+Oracle
+Other CPSE ERP platforms
+Advanced AI Models
+
+Future versions can incorporate:
+
+Domain-specific language models
+Fine-tuned embedding models
+Multilingual material understanding
+Advanced entity-resolution models
+Domain-specific material classifiers
+Unified Material Repository
+
+A governed harmonized material repository could provide a common reference layer across participating organizations.
+
+Intelligent Procurement
+
+Harmonized material identities could support:
+
+Cross-CPSE material discovery
+Standardized procurement descriptions
+Supplier comparison
+Procurement analytics
+Inventory intelligence
+Duplicate catalog reduction
+Continuous Learning
+
+Human reviewer decisions can be used as feedback to improve future material-matching recommendations.
+
+🎯 Expected Impact
+
+PRASHAM aims to help organizations move from:
+
+Multiple Codes
+Multiple Descriptions
+Multiple Catalogs
+        ↓
+Fragmented Material Information
+
+towards:
+
+Unified Material Understanding
+        ↓
+Harmonized Material Identity
+        ↓
+Cross-CPSE Visibility
+        ↓
+Improved Material Data Governance
+
+The objective is not simply to remove duplicate codes.
+
+The larger goal is to establish a common semantic understanding of industrial materials across CPSEs.
+
+🏆 Smart India Hackathon
+
+Project: PRASHAM [प्रशम]
+
+Problem Statement:
+AI-Driven Standardization and Harmonization of Material Codes Across CPSEs
+
+Category:
+Software
+
+Solution Type:
+AI-powered Material Master Standardization & Harmonization Platform
+
+Focus Areas:
+
+Artificial Intelligence
+Natural Language Processing
+Semantic Matching
+Entity Resolution
+Material Master Data
+Data Standardization
+Enterprise Procurement
+Human-in-the-Loop AI
+📌 Disclaimer
+
+PRASHAM is an SIH prototype developed to demonstrate the proposed solution concept.
+
+All organizations, material records, material codes, metrics, AI confidence values, financial figures, and analytics shown in the prototype are illustrative unless explicitly stated otherwise.
+
+The prototype does not represent an official CPSE system, government database, procurement platform, or production deployment.
+
+⭐ Vision
+
+One material. Multiple codes. One harmonized identity.
+
+PRASHAM aims to provide the intelligence layer required to discover, understand, standardize, and harmonize material information across CPSEs while keeping critical decisions transparent, explainable, and human-validated.
